@@ -1,0 +1,9 @@
+{
+  "name": "mnv-frontend",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "mnv-frontend/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project mnv-frontend --web",
+  "targets": {}
+}
