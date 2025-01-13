@@ -1,12 +1,17 @@
-// Uncomment this line to use CSS modules
-// import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import Login from '../pages/Login';
+import Home from '../pages/Home';
+import Scan from '../pages/Scan';
 
 export function App() {
   return (
-    <div>
-      <NxWelcome title="mnv-frontend" />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* <Route path="/" element={<Login />} /> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/qr" element={<Scan />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
