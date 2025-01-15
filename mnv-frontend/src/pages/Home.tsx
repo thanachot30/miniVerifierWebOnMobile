@@ -31,6 +31,9 @@ const Home = (props: Props) => {
       {/* AppBar */}
       <AppBar position="static" sx={{ bgcolor: 'black' }}>
         <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            MINI • Verify
+          </Typography>
           <IconButton
             edge="start"
             color="inherit"
@@ -39,21 +42,6 @@ const Home = (props: Props) => {
           >
             <FaBars size={24} /> {/* React Icons FaBars */}
           </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            MINI • Verify
-          </Typography>
-          <Button
-            variant="contained"
-            sx={{
-              bgcolor: 'blue',
-              color: 'white',
-              fontWeight: 'bold',
-              borderRadius: '20px',
-              textTransform: 'none',
-            }}
-          >
-            history
-          </Button>
         </Toolbar>
       </AppBar>
 
@@ -74,7 +62,7 @@ const Home = (props: Props) => {
 
         {/* <Card elevation={2} sx={{ borderRadius: 2, p: 2 }}>
           <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <FaCar size={40} /> 
+            <FaCar size={40} />
             <Box>
               <Typography variant="h6">Driver Licence</Typography>
               <Typography variant="subtitle2" color="textSecondary">
