@@ -37,6 +37,41 @@
     "docker-build": {
       "dependsOn": ["build"],
       "command": "docker build -f mnv-backend/Dockerfile . -t mnv-backend"
+    },
+    "docker-run": {
+      "dependsOn": ["build"],
+      "command": " docker run -d -p 3000:3000 mnv-backend"
+    },
+    "prisma": {
+      "executor": "nx:run-commands",
+      "options": {},
+      "configurations": {
+        "generate": {
+          "commands": [
+            "pnpm prisma generate --schema=./mnv-backend/src/prisma/schema.prisma"
+          ]
+        },
+        "db-migrate-reset": {
+          "commands": [
+            "dotenv -e .env -- prisma migrate reset --force --skip-seed --schema=./mnv-backend/src/prisma/schema.prisma"
+          ]
+        },
+        "db-migrate-dev": {
+          "commands": [
+            "dotenv -e .env -- prisma migrate dev --name=init --schema=./mnv-backend/src/prisma/schema.prisma"
+          ]
+        },
+        "db-seed-dev": {
+          "commands": ["dotenv -e .env -- prisma db seed"]
+        },
+        "db-migrate-deploy": {
+          "commands": ["dotenv -e .env -- prisma migrate deploy"],
+          "parallel": false
+        },
+        "db-migrate-prod": {
+          "commands": ["dotenv -e .env.prod -- prisma migrate deploy"]
+        }
+      }
     }
   }
 }

@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  nestjs-app:
+    image: mnv-backend:latest # Replace with your existing image name
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+
+  ngrok:
+    image: ngrok/ngrok
+    command: http nestjs-app:3000 --url=${NGROK_URL}
+    depends_on:
+      - nestjs-app
+    ports:
+      - '4040:4040' # ngrok web interface
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN} # Replace with your ngrok authtoken
