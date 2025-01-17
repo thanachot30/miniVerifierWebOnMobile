@@ -60,17 +60,17 @@ const Home = (props: Props) => {
         </Card>
         {/* Driver License Card */}
 
-        {/* <Card elevation={2} sx={{ borderRadius: 2, p: 2 }}>
+        <Card elevation={2} sx={{ borderRadius: 2, p: 2 }}>
           <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <FaCar size={40} />
+            {/* <FaCar size={30} /> */}
             <Box>
-              <Typography variant="h6">Driver Licence</Typography>
+              <Typography variant="h6">All Licence</Typography>
               <Typography variant="subtitle2" color="textSecondary">
-                PRESET USE CASE
+                PRESET ALL
               </Typography>
             </Box>
           </CardContent>
-        </Card> */}
+        </Card>
 
         {/* QR Code Button */}
         <Box

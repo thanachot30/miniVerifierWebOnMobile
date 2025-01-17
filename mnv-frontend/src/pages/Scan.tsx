@@ -1,56 +1,44 @@
 import { Box, Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { QrReader } from 'react-qr-reader';
+import QrScanner from 'react-qr-scanner';
 import { useNavigate } from 'react-router-dom';
 type Props = {};
 
 const Scan = (props: Props) => {
   const [qrData, setQrData] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isScanned, setIsScanned] = useState(false);
   const navigate = useNavigate(); // For navigation
-  const [mediaStream, setMediaStream] = useState<MediaStream | null>(null); // Store media stream
-  const handleResult = (result: any, error: any) => {
-    if (result) {
-      console.log(result?.text);
-      setQrData(result?.text || ''); // Extract QR code text
-    }
-    if (error) {
-      console.error(error);
-      setError('Error while scanning.');
-    }
-  };
+
   const handleBack = () => {
-    stopMediaStream();
     navigate('/'); // Navigate to the previous page
   };
-  const stopMediaStream = () => {
-    if (mediaStream) {
-      mediaStream.getTracks().forEach((track) => track.stop());
+
+  const handleScan = (data: string | null) => {
+    if (data) {
+      console.log('Scanned Data:', data);
+      setQrData(data);
+      setIsScanned(true);
+      // setTimeout(() => setIsScanned(false), 2000); // Reset after 2 seconds
+      navigate('/result');
     }
   };
 
-  // Automatically start camera when component mounts
-  useEffect(() => {
-    const initializeCamera = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment' }, // Use back camera
-        });
-        setMediaStream(stream);
-      } catch (err) {
-        console.error('Failed to access camera:', err);
-        setError('Failed to access camera. Please check permissions.');
-      }
-    };
+  const handleError = (err: any) => {
+    console.error('Error:', err);
+  };
 
-    initializeCamera();
-
-    return () => stopMediaStream(); // Cleanup on unmount
-  }, []);
+  console.log('qrData', qrData);
 
   return (
-    <Box sx={{ textAlign: 'center', mt: 4 }}>
-      <Box sx={{ display: 'flex' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'center',
+      }}
+    >
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
         <Button
           variant="text"
           onClick={handleBack}
@@ -59,80 +47,93 @@ const Scan = (props: Props) => {
           Back
         </Button>
       </Box>
-
-      <Box
-        sx={{
-          position: 'relative',
-          width: '100%',
-          height: '100%',
-          border: '4px solid black',
-        }}
-      >
-        <QrReader
-          constraints={{ facingMode: 'environment' }} // Use back camera
-          onResult={handleResult} // Updated to use onResult instead of onScan/onError
-          scanDelay={300} // Optional: scan delay in milliseconds
-          containerStyle={{ width: '100%' }}
-          videoStyle={{ width: '100%' }}
-        />
-        {/* Blue Border Frame */}
-        {mediaStream && (
+      <Box>
+        {!error && (
           <Box
             sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '250px',
-              height: '250px',
-              transform: 'translate(-50%, -50%)',
-              border: '4px solid blue', // Blue border
-              borderRadius: '10px', // Optional: Rounded corners
-              pointerEvents: 'none', // Allows interaction with QR scanner
-            }}
-          />
-        )}
-      </Box>
-
-      {/* Display Scanned Data */}
-      {qrData && (
-        <Box>
-          <Typography
-            sx={{
-              mt: 2,
-              fontSize: '3vh', // Set font size relative to viewport height
-              width: '100%', // Set width relative to viewport width
-              mx: 'auto', // Center horizontally
-              textAlign: 'center', // Center text
-              backgroundColor: '#f0f0f0', // Optional: Add background for clarity
-              padding: '1vh', // Optional: Add padding relative to viewport height
-              borderRadius: '10px', // Optional: Rounded corners
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              // border: '4px solid black',
+              overflow: 'hidden',
             }}
           >
-            Scanned Data: <strong>{qrData}</strong>
-          </Typography>
-        </Box>
-      )}
+            <QrScanner
+              delay={300}
+              onScan={handleScan}
+              onError={handleError}
+              style={{ width: '100%' }}
+            />
+            {/* Blue Border Frame */}
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: '220px',
+                height: '220px',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              {/* Top-left corner */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '25px',
+                  height: '25px',
+                  borderTop: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderLeft: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderTopLeftRadius: '25px', // Rounded corner
+                }}
+              />
 
-      {/* Display Error Message */}
-      {/* Display Error Message */}
-      {error && (
-        <Typography
-          variant="body1"
-          color="error"
-          sx={{
-            mt: 2,
-            fontSize: '2.5vh', // Set font size relative to viewport height
-            width: '80vw', // Set width relative to viewport width
-            mx: 'auto',
-            textAlign: 'center',
-            backgroundColor: '#ffe6e6', // Optional: Add a light red background for errors
-            padding: '1vh',
-            borderRadius: '10px',
-          }}
-        >
-          {error}
-        </Typography>
-      )}
+              {/* Top-right corner */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  width: '25px',
+                  height: '25px',
+                  borderTop: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderRight: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderTopRightRadius: '25px', // Rounded corner
+                }}
+              />
+
+              {/* Bottom-left corner */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  width: '25px',
+                  height: '25px',
+                  borderBottom: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderLeft: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderBottomLeftRadius: '25px', // Rounded corner
+                }}
+              />
+
+              {/* Bottom-right corner */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  bottom: 0,
+                  right: 0,
+                  width: '25px',
+                  height: '25px',
+                  borderBottom: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderRight: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderBottomRightRadius: '25px', // Rounded corner
+                }}
+              />
+            </Box>
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 };

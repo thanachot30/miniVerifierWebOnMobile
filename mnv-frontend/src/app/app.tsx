@@ -3,6 +3,8 @@ import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Scan from '../pages/Scan';
 import WebSocketDemo from '../pages/WebSocketDemo';
+import WebCrytoApi from '../pages/WebCrytoApi';
+import DisplayResult from '../pages/DisplayResult';
 
 export function App() {
   return (
@@ -11,7 +13,9 @@ export function App() {
         {/* <Route path="/" element={<Login />} /> */}
         <Route path="/" element={<Home />} />
         <Route path="/qr" element={<Scan />} />
-        {/* <Route path="/poc_web_socket" element={<WebSocketDemo />} /> */}
+        <Route path="/result" element={<DisplayResult />} />
+        {/* <Route path="/" element={<WebCrytoApi />} /> */}
+        <Route path="/websocket" element={<WebSocketDemo />} />
       </Routes>
     </BrowserRouter>
   );
