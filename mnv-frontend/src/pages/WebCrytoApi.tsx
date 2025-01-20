@@ -68,7 +68,7 @@ const WebCrytoApi = (props: Props) => {
     }
     const exportedKey = await window.crypto.subtle.exportKey(
       'jwk', // Format for exporting public key
-      keyPair.publicKey
+      keyPair.privateKey
     );
 
     // Convert to Base64 for easier sharing
@@ -149,7 +149,6 @@ const WebCrytoApi = (props: Props) => {
       >
         Export Public Key
       </Button>
-
       {exportedPublicKey && (
         <Box>
           <Typography variant="body1">
