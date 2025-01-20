@@ -28,8 +28,6 @@ const Scan = (props: Props) => {
     console.error('Error:', err);
   };
 
-  console.log('qrData', qrData);
-
   return (
     <Box
       sx={{
@@ -38,15 +36,6 @@ const Scan = (props: Props) => {
         textAlign: 'center',
       }}
     >
-      <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <Button
-          variant="text"
-          onClick={handleBack}
-          // sx={{ position: 'absolute', top: 16, left: 16 }}
-        >
-          Back
-        </Button>
-      </Box>
       <Box>
         {!error && (
           <Box

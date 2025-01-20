@@ -5,7 +5,8 @@ import Scan from '../pages/Scan';
 import WebSocketDemo from '../pages/WebSocketDemo';
 import WebCrytoApi from '../pages/WebCrytoApi';
 import DisplayResult from '../pages/DisplayResult';
-import Layout from '../pages/Layout';
+import Layout from '../components/Layout';
+import BackLayout from '../components/BackLayout';
 
 export function App() {
   return (
@@ -16,7 +17,9 @@ export function App() {
           <Route path="/" element={<Home />} />
         </Route>
 
-        {/* <Route path="/qr" element={<Scan />} /> */}
+        <Route element={<BackLayout />}>
+          <Route path="/qr" element={<Scan />} />
+        </Route>
         {/* <Route path="/result" element={<DisplayResult />} /> */}
         {/* <Route path="/" element={<WebCrytoApi />} />
 

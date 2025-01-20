@@ -1,4 +1,11 @@
-import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Divider,
+  IconButton,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import React from 'react';
 import { FaBars } from 'react-icons/fa';
 import { Outlet } from 'react-router-dom';
@@ -8,12 +15,10 @@ type Props = {};
 const Layout = (props: Props) => {
   return (
     <Box>
-      <AppBar position="static" sx={{ bgcolor: '#FFFFFF' }}>
+      <AppBar position="static" sx={{ bgcolor: '#FFFFFF' }} elevation={1}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box
             sx={{
-              p: 0,
-              m: 0,
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center', // Horizontal alignment

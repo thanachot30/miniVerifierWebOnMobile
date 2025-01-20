@@ -19,8 +19,12 @@ type Props = {};
 const Home = (props: Props) => {
   const navigate = useNavigate(); // React Router's navigation hook
 
+  const handleClick = () => {
+    navigate('/qr');
+  };
+
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Box>
         <Box>
           <Typography variant="h6" sx={{ p: 2 }} color="black">
@@ -64,7 +68,7 @@ const Home = (props: Props) => {
               </Box>
 
               <Typography sx={{ color: '#5E5E66' }}>
-                All Credentials.
+                All Can You Read.
               </Typography>
             </Box>
           </Card>
@@ -84,17 +88,18 @@ const Home = (props: Props) => {
       >
         <Button
           variant="contained"
+          onClick={handleClick}
           sx={{
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
             width: '80vw',
-            height: '50px',
+            p: 1,
           }}
         >
           <img src={Icon_qr} alt="qr Icon" width={18} height={18} />
-          Scan QR Code
+          <Box sx={{ pl: 1 }}>Scan QR Code</Box>
         </Button>
       </Box>
     </Box>
