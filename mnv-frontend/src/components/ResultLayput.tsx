@@ -1,15 +1,17 @@
-import { Box, AppBar, Toolbar, Typography, IconButton } from '@mui/material';
+import { Box, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 import React from 'react';
-import { FaBars } from 'react-icons/fa';
-import { Outlet, useNavigate } from 'react-router-dom';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
-
+import { useNavigate } from 'react-router-dom';
+import { RxCross2 } from 'react-icons/rx';
 type Props = {
   children: React.ReactNode; // Accept children as a prop
-  handleBack: () => void;
 };
 
-const BackLayout = ({ children, handleBack }: Props) => {
+const ResultLayput = ({ children }: Props) => {
+  const navigate = useNavigate(); // For navigation
+  const handleBack = () => {
+    navigate('/');
+  };
   return (
     <Box>
       <AppBar position="fixed" sx={{ bgcolor: '#FFFFFF' }} elevation={1}>
@@ -31,20 +33,20 @@ const BackLayout = ({ children, handleBack }: Props) => {
             }}
             onClick={handleBack}
           >
-            <MdOutlineArrowBackIos color="#0064FF" fontSize={20} />
+            <RxCross2 color="#0064FF" fontSize={20} />
           </IconButton>
           <Box>
             <Typography variant="h6" color="black">
-              Scan QR Code
+              Result
             </Typography>
           </Box>
         </Toolbar>
       </AppBar>
 
       {/* Main Content */}
-      <Box>{children}</Box>
+      <Box sx={{ pt: 6 }}>{children}</Box>
     </Box>
   );
 };
 
-export default BackLayout;
+export default ResultLayput;

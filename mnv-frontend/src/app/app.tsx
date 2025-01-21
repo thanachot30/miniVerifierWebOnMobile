@@ -13,13 +13,8 @@ export function App() {
     <BrowserRouter>
       <Routes>
         {/* <Route path="/" element={<Login />} /> */}
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-        </Route>
-
-        <Route element={<BackLayout />}>
-          <Route path="/qr" element={<Scan />} />
-        </Route>
+        <Route path="/" element={<Home />} />
+        <Route path="/result" element={<DisplayResult />} />
         {/* <Route path="/result" element={<DisplayResult />} /> */}
         {/* <Route path="/" element={<WebCrytoApi />} />
 

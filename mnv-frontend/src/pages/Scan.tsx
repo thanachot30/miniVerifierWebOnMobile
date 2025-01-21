@@ -4,23 +4,19 @@ import QrScanner from 'react-qr-scanner';
 import { useNavigate } from 'react-router-dom';
 type Props = {};
 
+const borderStyle = `4px solid #0064FF`;
+
 const Scan = (props: Props) => {
   const [qrData, setQrData] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isScanned, setIsScanned] = useState(false);
   const navigate = useNavigate(); // For navigation
 
-  const handleBack = () => {
-    navigate('/'); // Navigate to the previous page
-  };
-
   const handleScan = (data: string | null) => {
     if (data) {
       console.log('Scanned Data:', data);
       setQrData(data);
-      setIsScanned(true);
       // setTimeout(() => setIsScanned(false), 2000); // Reset after 2 seconds
-      navigate('/result');
     }
   };
 
@@ -40,18 +36,21 @@ const Scan = (props: Props) => {
         {!error && (
           <Box
             sx={{
+              p: 0,
+              m: 0,
               position: 'relative',
               width: '100%',
               height: '100%',
-              // border: '4px solid black',
+              //border: '4px solid black',
               overflow: 'hidden',
             }}
           >
             <QrScanner
-              delay={300}
+              //delay={300}
               onScan={handleScan}
               onError={handleError}
-              style={{ width: '100%' }}
+              style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+              facingMode={'environment'}
             />
             {/* Blue Border Frame */}
             <Box
@@ -72,8 +71,8 @@ const Scan = (props: Props) => {
                   left: 0,
                   width: '25px',
                   height: '25px',
-                  borderTop: `4px solid ${isScanned ? 'green' : 'blue'}`,
-                  borderLeft: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderTop: borderStyle,
+                  borderLeft: borderStyle,
                   borderTopLeftRadius: '25px', // Rounded corner
                 }}
               />
@@ -86,8 +85,8 @@ const Scan = (props: Props) => {
                   right: 0,
                   width: '25px',
                   height: '25px',
-                  borderTop: `4px solid ${isScanned ? 'green' : 'blue'}`,
-                  borderRight: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderTop: borderStyle,
+                  borderRight: borderStyle,
                   borderTopRightRadius: '25px', // Rounded corner
                 }}
               />
@@ -100,8 +99,8 @@ const Scan = (props: Props) => {
                   left: 0,
                   width: '25px',
                   height: '25px',
-                  borderBottom: `4px solid ${isScanned ? 'green' : 'blue'}`,
-                  borderLeft: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderBottom: borderStyle,
+                  borderLeft: borderStyle,
                   borderBottomLeftRadius: '25px', // Rounded corner
                 }}
               />
@@ -114,8 +113,8 @@ const Scan = (props: Props) => {
                   right: 0,
                   width: '25px',
                   height: '25px',
-                  borderBottom: `4px solid ${isScanned ? 'green' : 'blue'}`,
-                  borderRight: `4px solid ${isScanned ? 'green' : 'blue'}`,
+                  borderBottom: borderStyle,
+                  borderRight: borderStyle,
                   borderBottomRightRadius: '25px', // Rounded corner
                 }}
               />

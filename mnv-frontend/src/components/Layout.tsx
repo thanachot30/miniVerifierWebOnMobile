@@ -10,12 +10,14 @@ import React from 'react';
 import { FaBars } from 'react-icons/fa';
 import { Outlet } from 'react-router-dom';
 import VerifyIcon from '../assets/tdesign_verify-filled.svg';
-type Props = {};
+type Props = {
+  children: React.ReactNode; // Accept children as a prop
+};
 
-const Layout = (props: Props) => {
+const Layout = ({ children }: Props) => {
   return (
-    <Box>
-      <AppBar position="static" sx={{ bgcolor: '#FFFFFF' }} elevation={1}>
+    <Box sx={{ P: 0, m: 0 }}>
+      <AppBar position="fixed" sx={{ bgcolor: '#FFFFFF' }} elevation={1}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box
             sx={{
@@ -43,9 +45,7 @@ const Layout = (props: Props) => {
       </AppBar>
 
       {/* Main Content */}
-      <Box>
-        <Outlet />
-      </Box>
+      <Box sx={{ pt: 8 }}>{children}</Box>
     </Box>
   );
 };
