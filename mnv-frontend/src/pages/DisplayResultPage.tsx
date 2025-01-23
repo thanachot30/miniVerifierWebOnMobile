@@ -8,14 +8,19 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ResultLayput from '../components/ResultLayput';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import { GoCheckCircleFill } from 'react-icons/go';
 import { PiWarningCircleFill } from 'react-icons/pi';
+import ResultLayout from '../components/ResultLayout';
+import CommonLayout from '../components/CommonLayout';
+import { iconBack } from '@mini-verifier/shared';
 type Props = {};
 
 const DisplayResult = (props: Props) => {
   const navigate = useNavigate(); // For navigation
+  const location = useLocation();
+  const data_scan = location.state;
   const [loading, setLoading] = useState(true); // State to manage loading
   const [resultData, setResultData] = useState<any | null>(null); // State for result data
   const [bgColor, setbgColor] = useState('');
@@ -28,6 +33,9 @@ const DisplayResult = (props: Props) => {
 
   useEffect(() => {
     // Simulate a delay of 5 seconds
+    if (!data_scan) {
+      navigate('/error');
+    }
     const result = true;
     const timer = setTimeout(() => {
       setLoading(false); // Stop loading
@@ -43,10 +51,12 @@ const DisplayResult = (props: Props) => {
     return () => clearTimeout(timer); // Cleanup the timer
   }, []);
 
+  console.log('location', location, data_scan);
+
   return (
     <>
       {loading ? (
-        <ResultLayput>
+        <CommonLayout title="Result" icon={iconBack.cross} redirect="/">
           <Box>
             <Box
               sx={{
@@ -67,9 +77,9 @@ const DisplayResult = (props: Props) => {
               <Typography variant="body1">Waiting for holder...</Typography>
             </Box>
           </Box>
-        </ResultLayput>
+        </CommonLayout>
       ) : (
-        <ResultLayput>
+        <CommonLayout title="Result" icon={iconBack.cross} redirect="/">
           <Box>
             <Box
               sx={{
@@ -77,19 +87,28 @@ const DisplayResult = (props: Props) => {
                 color: '#FFFFFF',
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'center',
                 alignItems: 'center',
-                py: 6,
+                minHeight: '50vh',
               }}
             >
-              {result ? (
-                <GoCheckCircleFill color="#2DCD73" size={56} />
-              ) : (
-                <PiWarningCircleFill color="#F2DA00" size={56} />
-              )}
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                {result ? (
+                  <GoCheckCircleFill color="#2DCD73" size={56} />
+                ) : (
+                  <PiWarningCircleFill color="#F2DA00" size={56} />
+                )}
 
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                {result ? 'Valid credential' : 'Unable to verify'}
-              </Typography>
+                <Typography variant="h6" sx={{ mt: 2 }}>
+                  {result ? 'Valid credential' : 'Unable to verify'}
+                </Typography>
+              </Box>
             </Box>
 
             {/* Credential Details Card */}
@@ -159,7 +178,7 @@ const DisplayResult = (props: Props) => {
               </Button>
             </Box>
           </Box>
-        </ResultLayput>
+        </CommonLayout>
       )}
     </>
   );

@@ -4,18 +4,27 @@ import QrScanner from 'react-qr-scanner';
 import { useNavigate } from 'react-router-dom';
 type Props = {};
 
-const borderStyle = `4px solid #0064FF`;
+const borderStyle = `8px solid #0064FF`;
+const sizeBorderFrame = 25;
 
 const Scan = (props: Props) => {
-  const [qrData, setQrData] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isScanned, setIsScanned] = useState(false);
   const navigate = useNavigate(); // For navigation
 
+  const sizeW = 270;
+  const sizeH = 270;
+
+  const qrData = {
+    id: 1,
+    name: 'John Doe',
+    result: 'Success',
+  };
+
   const handleScan = (data: string | null) => {
     if (data) {
       console.log('Scanned Data:', data);
-      setQrData(data);
+      navigate('/result', { state: qrData });
       // setTimeout(() => setIsScanned(false), 2000); // Reset after 2 seconds
     }
   };
@@ -50,17 +59,38 @@ const Scan = (props: Props) => {
               onScan={handleScan}
               onError={handleError}
               style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+              // style={previewStyle}
               facingMode={'environment'}
             />
-            {/* Blue Border Frame */}
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)', // Gray with opacity
+                clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 
+                0 calc(50% - ${sizeW / 2}px),
+                 calc(50% - ${sizeW / 2}px) calc(50% - ${sizeH / 2}px),
+                 calc(50% - ${sizeW / 2}px) calc(50% + ${sizeH / 2}px),
+                 calc(50% + ${sizeW / 2}px) calc(50% + ${sizeH / 2}px), 
+                calc(50% + ${sizeW / 2}px) calc(50% - ${sizeH / 2}px),
+                 0 calc(50% - ${sizeH / 2}px))`,
+                zIndex: 1,
+              }}
+            />
+
             <Box
               sx={{
                 position: 'absolute',
                 top: '50%',
                 left: '50%',
-                width: '220px',
-                height: '220px',
+                width: `${sizeW}px`,
+                height: `${sizeH}px`,
                 transform: 'translate(-50%, -50%)',
+                //border: `4px solid #0064FF`, // Blue border for the frame
+                zIndex: 2,
               }}
             >
               {/* Top-left corner */}
@@ -69,11 +99,11 @@ const Scan = (props: Props) => {
                   position: 'absolute',
                   top: 0,
                   left: 0,
-                  width: '25px',
-                  height: '25px',
+                  width: `${sizeBorderFrame}px`,
+                  height: `${sizeBorderFrame}px`,
                   borderTop: borderStyle,
                   borderLeft: borderStyle,
-                  borderTopLeftRadius: '25px', // Rounded corner
+                  // borderTopLeftRadius: '25px', // Rounded corner
                 }}
               />
 
@@ -83,11 +113,11 @@ const Scan = (props: Props) => {
                   position: 'absolute',
                   top: 0,
                   right: 0,
-                  width: '25px',
-                  height: '25px',
+                  width: `${sizeBorderFrame}px`,
+                  height: `${sizeBorderFrame}px`,
                   borderTop: borderStyle,
                   borderRight: borderStyle,
-                  borderTopRightRadius: '25px', // Rounded corner
+                  // borderTopRightRadius: '25px', // Rounded corner
                 }}
               />
 
@@ -97,11 +127,11 @@ const Scan = (props: Props) => {
                   position: 'absolute',
                   bottom: 0,
                   left: 0,
-                  width: '25px',
-                  height: '25px',
+                  width: `${sizeBorderFrame}px`,
+                  height: `${sizeBorderFrame}px`,
                   borderBottom: borderStyle,
                   borderLeft: borderStyle,
-                  borderBottomLeftRadius: '25px', // Rounded corner
+                  // borderBottomLeftRadius: '25px', // Rounded corner
                 }}
               />
 
@@ -111,11 +141,11 @@ const Scan = (props: Props) => {
                   position: 'absolute',
                   bottom: 0,
                   right: 0,
-                  width: '25px',
-                  height: '25px',
+                  width: `${sizeBorderFrame}px`,
+                  height: `${sizeBorderFrame}px`,
                   borderBottom: borderStyle,
                   borderRight: borderStyle,
-                  borderBottomRightRadius: '25px', // Rounded corner
+                  // borderBottomRightRadius: '25px', // Rounded corner
                 }}
               />
             </Box>

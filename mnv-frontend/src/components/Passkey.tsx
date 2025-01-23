@@ -7,7 +7,7 @@ import axios from 'axios';
 import { TextField, Button, Typography, Box, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Passkey = () => {
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -96,4 +96,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Passkey;

@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import FluentBook from '../assets/fluent_book-default-28-regular.svg';
 import antSetting from '../assets/ant-design_setting-outlined.svg';
 import Icon_qr from '../assets/qrIcon.svg';
-import Scan from './Scan';
+import Scan from './ScanPage';
 import BackLayout from '../components/BackLayout';
 import Layout from '../components/Layout';
 type Props = {};
